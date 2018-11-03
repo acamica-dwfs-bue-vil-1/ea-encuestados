@@ -61,8 +61,10 @@ VistaAdministrador.prototype = {
       var respuestas = [];
 
       $('[name="option[]"]').each(function() {
-        let respuesta = $(this).val();
-        respuestas.push({'textoRespuesta': respuesta, 'cantidad': 0});
+        let respuesta = $(this).val()
+        if (respuesta !== '') {
+          respuestas.push({'textoRespuesta': respuesta, 'cantidad': 0});
+        }
       })
       console.table(respuestas);
       contexto.limpiarFormulario();
@@ -73,8 +75,6 @@ VistaAdministrador.prototype = {
     e.botonBorrarPregunta.click(() => {
       id = parseInt($('.list-group-item.active').attr('id'));
       contexto.controlador.borrarPregunta(id)
-      console.log('hola');
-      console.log(id);
     });
   },
 

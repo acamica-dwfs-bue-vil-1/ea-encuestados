@@ -16,11 +16,13 @@ var VistaUsuario = function(modelo, controlador, elementos) {
 VistaUsuario.prototype = {
   //muestra la lista por pantalla y agrega el manejo del boton agregar
   inicializar: function() {
+    // JSON.parse(localStorage.getItem('preguntas'));    
     this.reconstruirLista();
     var elementos = this.elementos;
     var contexto = this;
     
     elementos.botonAgregar.click(function() {
+      console.log('hola');
       contexto.agregarVotos(); 
     });
       
@@ -51,6 +53,7 @@ VistaUsuario.prototype = {
     preguntas.forEach(function(clave){
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
+      listaPreguntas.append(`<div id=${clave.id} value="${clave.textoPregunta}">${clave.textoPregunta}</div>`)
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
     })
@@ -78,8 +81,10 @@ VistaUsuario.prototype = {
         var id = $(this).attr('id');
         var respuestaSeleccionada = $('input[name=' + id + ']:checked').val();
         $('input[name=' + id + ']').prop('checked',false);
+        console.log(nombrePregunta, respuestaSeleccionada);        
         contexto.controlador.agregarVoto(nombrePregunta,respuestaSeleccionada);
       });
+    this.reconstruirGrafico();    
   },
 
   dibujarGrafico: function(nombre, respuestas){

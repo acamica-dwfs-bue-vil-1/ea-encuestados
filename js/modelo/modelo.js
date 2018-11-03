@@ -4,7 +4,9 @@
 var Modelo = function() {
   this.preguntas = [];
   this.ultimoId = 0;
-
+  if (localStorage.preguntas) {
+    this.preguntas = JSON.parse(localStorage.getItem('preguntas'));    
+  }
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
@@ -53,12 +55,13 @@ Modelo.prototype = {
     var nuevaPregunta = {'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas};
     this.preguntas.push(nuevaPregunta);
     console.log(this.preguntas);
-    this.guardar();
+    // this.guardar();
     this.preguntaAgregada.notificar();
   },
 
   //se guardan las preguntas
   guardar: function(){
+    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
   },
   //se borran las preguntas
   borrarPregunta: function(id){
@@ -66,6 +69,20 @@ Modelo.prototype = {
     let arrPreguntaBorrada = this.preguntas.filter(pregunta => pregunta.id !== id);
     console.log(arrPreguntaBorrada);
     [...this.preguntas] = arrPreguntaBorrada;
+    // this.guardar();    
     this.preguntaEliminada.notificar();    
-  } 
+  } ,
+  agregarVoto: function (nombrePregunta, respuestaSeleccionada) {
+    this.preguntas.forEach(pregunta => {
+      if (pregunta.textoPregunta === nombrePregunta) {
+        pregunta.cantidadPorRespuesta.forEach(respuesta => {
+          if (respuesta.textoRespuesta === respuestaSeleccionada) {
+            respuesta.cantidad++;
+          }
+        });
+      }
+    });
+    console.log(nombrePregunta, respuestaSeleccionada);
+    this.guardar();
+  }
 };
