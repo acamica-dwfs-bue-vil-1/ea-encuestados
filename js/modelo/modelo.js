@@ -10,6 +10,8 @@ var Modelo = function() {
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
+  this.preguntasEliminadas = new Evento(this);
+  this.preguntaEditada = new Evento(this);
 };
 
 Modelo.prototype = {
@@ -71,7 +73,8 @@ Modelo.prototype = {
     [...this.preguntas] = arrPreguntaBorrada;
     // this.guardar();    
     this.preguntaEliminada.notificar();    
-  } ,
+  },
+
   agregarVoto: function (nombrePregunta, respuestaSeleccionada) {
     this.preguntas.forEach(pregunta => {
       if (pregunta.textoPregunta === nombrePregunta) {
@@ -83,6 +86,19 @@ Modelo.prototype = {
       }
     });
     console.log(nombrePregunta, respuestaSeleccionada);
-    this.guardar();
-  }
+    // this.guardar();
+  },
+
+  borrarTodo: function () {
+    this.preguntas = [];
+    this.preguntasEliminadas.notificar();    
+  },
+
+  editarPregunta: function (id) {
+    let preguntaAEditadar = this.preguntas.find(pregunta => pregunta.id === id);
+    console.log('pregunta a editar: ' + preguntaAEditadar.textoPregunta);
+    const edicionPregunta = prompt('Editar pregunta:')
+    preguntaAEditadar.textoPregunta = edicionPregunta;
+    this.preguntaEditada.notificar();    
+  },
 };

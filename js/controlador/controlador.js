@@ -16,5 +16,14 @@ Controlador.prototype = {
   },
   agregarVoto: function (nombrePregunta, respuestaSeleccionada) {
     this.modelo.agregarVoto(nombrePregunta, respuestaSeleccionada);
+    this.modelo.guardar();       
+  },
+  borrarTodo: function () {
+    this.modelo.borrarTodo();
+    this.modelo.guardar();       
+  },
+  editarPregunta: function (id) {
+    this.modelo.editarPregunta(id);
+    this.modelo.guardar();
   }
 };
