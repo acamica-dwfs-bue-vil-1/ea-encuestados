@@ -72,7 +72,6 @@ VistaAdministrador.prototype = {
           respuestas.push({'textoRespuesta': respuesta, 'cantidad': 0});
         }
       })
-      console.table(respuestas);
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
     });

@@ -28,26 +28,6 @@ Modelo.prototype = {
           }
         });
       return max;
-      
-    //  if (this.preguntas !== []) {
-  //   return Math.max(this.preguntas.id);
-  // }else{
-  //   return 0;
-  // }
-  
-    // Math.max(this.preguntas);
-    // let max;
-    // if (this.preguntas !== []) {
-    //   max = this.preguntas.reduce((valorInicial, valorActual) => {
-    //     if (valorActual > valorInicial) {
-    //       return valorActual;
-    //     }else{
-    //       return valorInicial;
-    //     }
-    //   }, this.ultimoId);
-    // }
-    // this.ultimoId = max;
-    // return this.ultimoId;    
   },
 
   //se agrega una pregunta dado un nombre y sus respuestas
@@ -56,8 +36,6 @@ Modelo.prototype = {
     id++;
     var nuevaPregunta = {'textoPregunta': nombre, 'id': id, 'cantidadPorRespuesta': respuestas};
     this.preguntas.push(nuevaPregunta);
-    console.log(this.preguntas);
-    // this.guardar();
     this.preguntaAgregada.notificar();
   },
 
@@ -67,11 +45,8 @@ Modelo.prototype = {
   },
   //se borran las preguntas
   borrarPregunta: function(id){
-    //arreglar el find!
     let arrPreguntaBorrada = this.preguntas.filter(pregunta => pregunta.id !== id);
-    console.log(arrPreguntaBorrada);
     [...this.preguntas] = arrPreguntaBorrada;
-    // this.guardar();    
     this.preguntaEliminada.notificar();    
   },
 
@@ -85,8 +60,6 @@ Modelo.prototype = {
         });
       }
     });
-    console.log(nombrePregunta, respuestaSeleccionada);
-    // this.guardar();
   },
 
   borrarTodo: function () {
@@ -96,7 +69,6 @@ Modelo.prototype = {
 
   editarPregunta: function (id) {
     let preguntaAEditadar = this.preguntas.find(pregunta => pregunta.id === id);
-    console.log('pregunta a editar: ' + preguntaAEditadar.textoPregunta);
     const edicionPregunta = prompt('Editar pregunta:')
     preguntaAEditadar.textoPregunta = edicionPregunta;
     this.preguntaEditada.notificar();    
