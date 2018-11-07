@@ -63,7 +63,9 @@ Modelo.prototype = {
   },
 
   borrarTodo: function () {
-    this.preguntas = [];
+    if (this.preguntas !== []) {
+      this.preguntas = [] 
+    };
     this.preguntasEliminadas.notificar();    
   },
 
